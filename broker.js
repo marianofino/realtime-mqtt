@@ -1,72 +1,79 @@
-var mosca = require('mosca');
+const mosca = require('mosca');
+const { parse } = require('querystring');
+const IRTA = require('./irta')
 
-var ascoltatore = {
+let ascoltatore = {
   type: 'zmq',
   json: false,
   zmq: require("zeromq"),
   port: "tcp://127.0.0.1:33333",
   controlPort: "tcp://127.0.0.1:33334",
   delay: 10
-};
+}
 
-var settings = {
+let settings = {
   port: 1883,
-  backend: ascoltatore
-};
+  http: {
+    port: 3000,
+    bundle: true,
+    static: './'
+  }
+}
 
-let topics = {}
-let subscriptions = {}
+let server = new mosca.Server(settings);
 
-var server = new mosca.Server(settings);
+let irta = new IRTA(server)
 
-server.on('clientConnected', function(client) {
-  //console.log(client);
-  console.log('client connected', client.id);
-});
+let currentValues = {}
 
-server.on('topicRegistered', function(topic, topicParams, client) {
-  addTopic(topic, topicParams);
-});
+irta.subscribe('temperature', { period: 1, latency: 255 })
+irta.subscribe('pressure', { period: 1, latency: 255 })
 
-server.on('subscribed', function(topic, topicParams, client) {
-  addSubscription(client.id, topic, topicParams);
-});
+irta.lambda = function (packet) {
+
+  let payload = packet.payload.toString()
+
+  switch (packet.topic) {
+
+    case 'temperature':
+      
+      if (currentValues.pressure) {
+        let k = currentValues.pressure / parseFloat(packet.payload)
+        let payload = Buffer.from(k.toString())
+        delete currentValues.pressure
+        irta.publishNewTopic('kConstant', payload)
+      }
+
+      currentValues.temperature = parseFloat(packet.payload)
+
+      break
+
+    case 'pressure':
+      
+      if (currentValues.temperature) {
+        let k = currentValues.temperature / parseFloat(packet.payload)
+        let payload = Buffer.from(k.toString())
+        delete currentValues.temperature
+        irta.publishNewTopic('kConstant', payload)
+      }
+
+      currentValues.pressure = parseFloat(packet.payload)
+
+      break
+
+    default:
+      return true
+      break
+
+  }
+
+  return false
+
+}
 
 server.on('ready', setup);
 
 // fired when the mqtt server is ready
 function setup() {
-  console.log('Mosca server is up and running');
-}
-
-let addSubscription = function (clientId, topic, topicParams) {
-  // if client doesn't have any subscription add it
-  if (!subscriptions[clientId])
-    subscriptions[clientId] = { subscriptions: {} }
-
-  // add subscription params
-  subscriptions[clientId].subsctiptions[topic] = topicParams
-}
-
-let addTopic = function (topic, topicParams) {
-
-  if (topics[topic]) {
-    // topic exists
-    // TODO: calculate new topic period
-  } else {
-    // new topic
-    topics[topic] = topicParams;
-  }
-}
-
-// if true, packet will be sent to client
-server.doPublish = function (topic, clientId) {
-  let publish = false;
-
-  // get topicParams
-  let topicParams = subscriptions[clientId].subsctiptions[topic]
-
-  // TODO: we have period, latency and client id; now run conditions to decide if packet is published or not
-
-  return publish;
+  console.log('MQTT broker is up and running');
 }
