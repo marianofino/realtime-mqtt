@@ -49,3 +49,9 @@ $ node sensor2_pressure.js
 In the example folder, open `broker.js` in a text editor. Locate function definition *lambda* (line 32 approx). That function acts as a filter of all the incoming packets to the broker. By redefining that function you can add your own logic, store/delete data from the packets, etc. If that function returns true, it will publish that packet; if it returns false, it will not publish it.
 
 If you would like to test the time constraints introduced in IRTA model, you must change the *subscriber* and *publisher* **topicParams** located on the respective files.
+
+# Troubleshooting
+
+## Error: listen EADDRINUSE :::1883
+
+This means that the port 1883 is being used by other process. Probably you have another MQTT broker running (Mosquitto?). Make sure to either stop that process or change the broker port (found on `settings` in the broker file).
