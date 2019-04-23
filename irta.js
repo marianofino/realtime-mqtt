@@ -43,7 +43,9 @@ function IRTA (moscaServer) {
   }
 
   this.publishNewTopic = function (topic, message) {
-    client.publish(topic, message, { timestamp: getCurrentTime() })
+    let t = getCurrentTime()
+    console.log('[' + _parseTime(t) + '] Publish new message under topic: ' + topic)
+    client.publish(topic, message, { timestamp: t })
   }
 
   // override this function
@@ -61,6 +63,11 @@ function IRTA (moscaServer) {
 
   moscaServer.on('subscribed', function(topic, topicParams, client) {
     _self.registerSubscription(client.id, topic, topicParams)
+  })
+
+  moscaServer.on('published', function(packet) {
+    let t = getCurrentTime()
+    console.log('[' + _parseTime(t) + '] Message received with topic: ' + packet.topic)
   })
 
   moscaServer.doPublish = function (packet, clientId) {
@@ -102,6 +109,17 @@ function IRTA (moscaServer) {
 
   moscaServer.lambda = function (packet) {
     return _self.lambda(packet)
+  }
+
+  function _parseTime(time) {
+    let d = new Date(time*1000*60)
+    return d.getFullYear() + '/' + pad((d.getMonth() + 1),2) + '/' + pad(d.getDate(),2) + ' ' + d.getHours() + ':' + pad(d.getMinutes(), 2)
+  }
+
+  function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
   }
 
 }

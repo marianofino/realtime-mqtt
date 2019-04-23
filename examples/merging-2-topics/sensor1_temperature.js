@@ -1,4 +1,4 @@
-const Publisher = require('./publisher.class')
+const Publisher = require('../../publisher.class')
 
 /* client 1: publishes temperature according to pressure and  */
 

@@ -1,6 +1,6 @@
 const mosca = require('mosca');
 const { parse } = require('querystring');
-const IRTA = require('./irta')
+const IRTA = require('../../irta')
 
 let ascoltatore = {
   type: 'zmq',
@@ -42,22 +42,20 @@ irta.lambda = function (packet) {
         let payload = Buffer.from(k.toString())
         delete currentValues.pressure
         irta.publishNewTopic('kConstant', payload)
-      }
-
-      currentValues.temperature = parseFloat(packet.payload)
+      } else
+        currentValues.temperature = parseFloat(packet.payload)
 
       break
 
     case 'pressure':
       
       if (currentValues.temperature) {
-        let k = currentValues.temperature / parseFloat(packet.payload)
+        let k = parseFloat(packet.payload) / currentValues.temperature
         let payload = Buffer.from(k.toString())
         delete currentValues.temperature
         irta.publishNewTopic('kConstant', payload)
-      }
-
-      currentValues.pressure = parseFloat(packet.payload)
+      } else
+        currentValues.pressure = parseFloat(packet.payload)
 
       break
 
