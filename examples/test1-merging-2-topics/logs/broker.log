@@ -1,41 +1,21 @@
-MQTT broker is up and running
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/clients
-Debug ON for IRTA
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/clients
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/subscribes
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/clients
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/subscribes
 [2019/07/26 15:54] Message received with topic: pumpFlow
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/clients
-[2019/07/26 15:54] Message received with topic: $SYS/kvh1OGx/new/subscribes
-[2019/07/26 15:54] Publish new message under topic: applicationRate
 [2019/07/26 15:54] Message received with topic: time
-[2019/07/26 15:54] Message received with topic: applicationRate
+[2019/07/26 15:54] Publish new message under topic: applicationRate
 [2019/07/26 15:55] Message received with topic: pumpFlow
-[2019/07/26 15:55] Publish new message under topic: applicationRate
 [2019/07/26 15:55] Message received with topic: time
-[2019/07/26 15:55] Message received with topic: applicationRate
+[2019/07/26 15:55] Publish new message under topic: applicationRate
 [2019/07/26 15:56] Message received with topic: pumpFlow
-[2019/07/26 15:56] Publish new message under topic: applicationRate
 [2019/07/26 15:56] Message received with topic: time
-[2019/07/26 15:56] Message received with topic: applicationRate
+[2019/07/26 15:56] Publish new message under topic: applicationRate
 [2019/07/26 15:57] Message received with topic: pumpFlow
-[2019/07/26 15:57] Publish new message under topic: applicationRate
 [2019/07/26 15:57] Message received with topic: time
-[2019/07/26 15:57] Message received with topic: applicationRate
+[2019/07/26 15:57] Publish new message under topic: applicationRate
 [2019/07/26 15:58] Message received with topic: pumpFlow
-[2019/07/26 15:58] Publish new message under topic: applicationRate
 [2019/07/26 15:58] Message received with topic: time
-[2019/07/26 15:58] Message received with topic: applicationRate
 [2019/07/26 15:59] Message received with topic: pumpFlow
-[2019/07/26 15:59] Publish new message under topic: applicationRate
+[2019/07/26 15:58] Publish new message under topic: applicationRate
 [2019/07/26 15:59] Message received with topic: time
-[2019/07/26 15:59] Message received with topic: applicationRate
+[2019/07/26 15:59] Publish new message under topic: applicationRate
 [2019/07/26 16:00] Message received with topic: pumpFlow
-[2019/07/26 16:00] Publish new message under topic: applicationRate
 [2019/07/26 16:00] Message received with topic: time
-[2019/07/26 16:00] Message received with topic: applicationRate
-[2019/07/26 16:00] Message received with topic: $SYS/kvh1OGx/disconnect/clients
-[2019/07/26 16:00] Message received with topic: $SYS/kvh1OGx/disconnect/clients
-[2019/07/26 16:00] Message received with topic: $SYS/kvh1OGx/new/unsubscribes
-[2019/07/26 16:00] Message received with topic: $SYS/kvh1OGx/disconnect/clients
+[2019/07/26 16:00] Publish new message under topic: applicationRate
