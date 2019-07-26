@@ -1,0 +1,35 @@
+MQTT broker is up and running
+[2019/07/26 16:14] Message received with topic: $SYS/A0YtB0h/new/clients
+Debug ON for IRTA
+[2019/07/26 16:14] Message received with topic: $SYS/A0YtB0h/new/clients
+[2019/07/26 16:14] Message received with topic: $SYS/A0YtB0h/new/subscribes
+[2019/07/26 16:14] Message received with topic: $SYS/A0YtB0h/new/clients
+[2019/07/26 16:14] Message received with topic: $SYS/A0YtB0h/new/subscribes
+[2019/07/26 16:14] Message received with topic: pumpFlow
+Packet period is not acceptable: 1 (projected) vs 3 (expected)
+[2019/07/26 16:15] Message received with topic: pumpFlow
+Packet period is not acceptable: 2 (projected) vs 3 (expected)
+[2019/07/26 16:16] Message received with topic: pumpFlow
+[2019/07/26 16:17] Message received with topic: pumpFlow
+Packet period is not acceptable: 1 (projected) vs 3 (expected)
+[2019/07/26 16:18] Message received with topic: pumpFlow
+Packet period is not acceptable: 2 (projected) vs 3 (expected)
+[2019/07/26 16:19] Message received with topic: pumpFlow
+[2019/07/26 16:20] Message received with topic: pumpFlow
+Packet period is not acceptable: 1 (projected) vs 3 (expected)
+[2019/07/26 16:21] Message received with topic: pumpFlow
+Packet period is not acceptable: 2 (projected) vs 3 (expected)
+[2019/07/26 16:22] Message received with topic: pumpFlow
+[2019/07/26 16:23] Message received with topic: pumpFlow
+Packet period is not acceptable: 1 (projected) vs 3 (expected)
+[2019/07/26 16:24] Message received with topic: pumpFlow
+Packet period is not acceptable: 2 (projected) vs 3 (expected)
+[2019/07/26 16:25] Message received with topic: pumpFlow
+[2019/07/26 16:26] Message received with topic: pumpFlow
+Packet period is not acceptable: 1 (projected) vs 3 (expected)
+[2019/07/26 16:27] Message received with topic: pumpFlow
+Packet period is not acceptable: 2 (projected) vs 3 (expected)
+[2019/07/26 16:28] Message received with topic: pumpFlow
+[2019/07/26 16:29] Message received with topic: pumpFlow
+Packet period is not acceptable: 1 (projected) vs 3 (expected)
+[2019/07/26 16:30] Message received with topic: pumpFlow

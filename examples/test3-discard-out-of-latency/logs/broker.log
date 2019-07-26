@@ -1,0 +1,29 @@
+[2019/07/26 16:32] Message received with topic: $SYS/Dvignmm/new/clients
+[2019/07/26 16:32] Message received with topic: $SYS/Dvignmm/new/subscribes
+[2019/07/26 16:32] Message received with topic: $SYS/Dvignmm/new/clients
+[2019/07/26 16:32] Message received with topic: $SYS/Dvignmm/new/subscribes
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:32] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:33] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:34] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:35] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:36] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:37] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:38] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:39] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:40] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:41] Message received with topic: pumpFlow
+Packet latency is not acceptable: 2 (projected) vs 1 (expected)
+[2019/07/26 16:42] Message received with topic: pumpFlow
+[2019/07/26 16:42] Message received with topic: $SYS/Dvignmm/disconnect/clients
+[2019/07/26 16:42] Message received with topic: $SYS/Dvignmm/new/unsubscribes
+[2019/07/26 16:42] Message received with topic: $SYS/Dvignmm/disconnect/clients

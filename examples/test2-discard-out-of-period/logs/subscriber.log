@@ -1,0 +1,12 @@
+[2019/07/26 16:14] Receives packet with topic "pumpFlow" and payload: 146.56
+Received pump flow: 146.56 m3/hour
+[2019/07/26 16:17] Receives packet with topic "pumpFlow" and payload: 145.76
+Received pump flow: 145.76 m3/hour
+[2019/07/26 16:20] Receives packet with topic "pumpFlow" and payload: 148.31
+Received pump flow: 148.31 m3/hour
+[2019/07/26 16:23] Receives packet with topic "pumpFlow" and payload: 145.12
+Received pump flow: 145.12 m3/hour
+[2019/07/26 16:26] Receives packet with topic "pumpFlow" and payload: 149.40
+Received pump flow: 149.40 m3/hour
+[2019/07/26 16:29] Receives packet with topic "pumpFlow" and payload: 149.58
+Received pump flow: 149.58 m3/hour

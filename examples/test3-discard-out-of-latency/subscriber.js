@@ -6,7 +6,7 @@ let sub = new Subscriber({ broker: 'mqtt://127.0.0.1:1883', id: 'subscriber-1', 
 
 sub.on('message', function (topic, message) {
   // do something with message
-  console.log('Received application rate: ' + message.toString() + ' mm')
+  console.log('Received pump flow: ' + message.toString() + ' m3/hour')
 })
 
 
