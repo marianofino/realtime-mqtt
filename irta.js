@@ -1,4 +1,6 @@
 const mqtt = require('mqtt')
+const MIN_PERIOD = 1
+const MAX_LATENCY = 255
 
 function IRTA (moscaServer) {
 
@@ -6,13 +8,36 @@ function IRTA (moscaServer) {
   let topicsRegistered = {}
   let subscriptions = {}
 
+  let topicsWatching = []
+
   let client  = mqtt.connect('mqtt://127.0.0.1:1883')
 
   client.on('connect', function () {
     console.log('Debug ON for IRTA')
   })
 
+  this.isWatchingTopic = function (topic) {
+    if (topicsWatching.indexOf(topic) >= 0)
+      return true
+
+    return false
+  }
+
+  this.watchTopics = function (topics) {
+    if (!(topics instanceof Array))
+      topics = [topics]
+
+    for (var i=0; i < topics.length; i++) {
+      var topic = topics[i]
+      if (!_self.isWatchingTopic(topic)) {
+        _self.subscribe(topic, { period: MIN_PERIOD, latency: MAX_LATENCY })
+      }
+    }
+  }
+
   this.registerTopic = function (topic, topicParams) {
+    this.watchTopics(topic)
+
     if (topicsRegistered[topic]) {
       // topic exists
       // TODO: calculate new topic period
@@ -45,11 +70,14 @@ function IRTA (moscaServer) {
   this.publishNewTopic = function (topic, message) {
     let t = getCurrentTime()
     console.log('[' + _parseTime(t) + '] Publish new message under topic: ' + topic)
-    client.publish(topic, message, { timestamp: t })
+    client.publish(topic, Buffer.from(message), { timestamp: t })
   }
 
-  // override this function
-  this.lambda = function () { return true }
+  this.setFunction = function (fn) {
+    moscaServer.lambda = function (packet) {
+      return fn(_self, packet)
+    } 
+  }
 
   function getCurrentTime() {
     return parseInt(Date.now() / 1000 / 60)
@@ -83,7 +111,7 @@ function IRTA (moscaServer) {
     let projectedLatency = getCurrentTime() - packet.timestamp + topicParams.currentLatency
     if (projectedLatency > topicParams.latency) {
       console.log('Packet latency is not acceptable: ' + projectedLatency + ' (projected) vs ' + topicParams.latency + ' (expected)')
-      console.log(getCurrentTime(), packet.timestamp, topicParams.currentLatency)
+      //console.log(getCurrentTime(), packet.timestamp, topicParams.currentLatency)
       return false
     }
 
@@ -93,7 +121,7 @@ function IRTA (moscaServer) {
 
       if (period != topicParams.period) {
         console.log('Packet period is not acceptable: ' + period + ' (projected) vs ' + topicParams.period + ' (expected)')
-        console.log(packet.timestamp, topicParams.lastMessageTimestamp)
+        //console.log(packet.timestamp, topicParams.lastMessageTimestamp)
 
         if (period < 0)
           topicParams.lastMessageTimestamp = packet.timestamp
@@ -105,10 +133,6 @@ function IRTA (moscaServer) {
     topicParams.lastMessageTimestamp = packet.timestamp
 
     return true
-  }
-
-  moscaServer.lambda = function (packet) {
-    return _self.lambda(packet)
   }
 
   function _parseTime(time) {

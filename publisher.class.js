@@ -10,6 +10,7 @@ function Publisher(settings, debug) {
   let _id = settings.id
   let _topic = settings.topic
   let _lastMessageTime = null
+  let _latency = 0
 
   console.log('Debug ON for client ' + _id)
 
@@ -22,7 +23,7 @@ function Publisher(settings, debug) {
     setInterval(() => {
       if (_isPeriod()) {
         let payload = _self.getPayload()
-        let timestamp = _getCurrentTime()
+        let timestamp = _getCurrentTime() - _latency
         _client.publish(_topic, payload, { timestamp: timestamp })
         if (debug)
           console.log('[' + _parseTime(timestamp) + '] Packet sent with topic \"' + _topic + '\" and payload: ' + payload)
@@ -33,6 +34,11 @@ function Publisher(settings, debug) {
 
   this.getPayload = function () {
     return 1
+  }
+
+  // in minutes
+  this.setSimulatedLatency = function (lat) {
+    _latency = lat
   }
 
   function _getCurrentTime() {
