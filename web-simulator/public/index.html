@@ -1,0 +1,310 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>IRTA Simulator</title>
+
+    <!-- Bootstrap core CSS -->
+<link href="css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      body {
+        padding-top: 5rem;
+      }
+      .starter-template {
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h1>IRTA Simulator</h1>
+          <p>For more information, please visit <a href="https://github.com/marianofino/realtime-mqtt">IRTA Github repository</a>. All packets send a random number from 1 to 999999.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+
+          <ul class="nav nav-pills">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#nodes">Nodes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#broker">Broker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#log">Log</a>
+            </li>
+          </ul>
+
+          <div style="height: 20px"></div>
+
+          <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade show active" id="nodes">
+              
+              <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+                Add Node
+              </button>
+
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Node Type</th>
+                    <th scope="col">Topic</th>
+                    <th scope="col">Settings</th>
+                    <th scope="col">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="nodeList"><tr><th scope="row">1</th><td>Mark</td><td>Otto</td><td>@mdo</td><td>mdo</td></tr></tbody>
+              </table>
+            </div>
+            <div class="tab-pane fade" id="broker">
+              <form>
+              <div class="form-group">
+                <label for="irtaFunction">IRTA Function</label>
+                <textarea class="form-control" id="irtaFunction" rows="20"></textarea>
+              </div>
+              <button type="button" class="btn btn-primary" onclick="storeFunction()">Save</button>
+              </form>
+            </div>
+            <div class="tab-pane fade" id="log">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Description</th>
+                  </tr>
+                </thead>
+                <tbody id="logList"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Node</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+
+            <form>
+              <div class="form-group row">
+                <label for="nodeID" class="col-sm-5 col-form-label">ID</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="nodeID">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="nodeType" class="col-sm-5 col-form-label">Node Type</label>
+                <div class="col-sm-7">
+                  <select class="custom-select" id="nodeType" onchange="typeChanged()">
+                    <option selected>-- Choose --</option>
+                    <option value="pub">Publisher</option>
+                    <option value="sub">Subscriber</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="topic" class="col-sm-5 col-form-label">Topic</label>
+                <div class="col-sm-7">
+                  <input type="text" class="form-control" id="topic">
+                </div>
+              </div>
+<!--
+              <div class="form-group row">
+                <label for="simNetLat" class="col-sm-5 col-form-label">Sim. Network Latency</label>
+                <div class="col-sm-7">
+                  <input type="number" class="form-control" id="simNetLat">
+                  <small id="simNetLatHelp" class="form-text text-muted">
+                   minutes
+                  </small>
+                </div>
+              </div>
+-->
+
+              <!-- subscriber -->
+              <div class="form-group row" id="expLatContainer">
+                <label for="expLat" class="col-sm-5 col-form-label">Expected Latency</label>
+                <div class="col-sm-7">
+                  <input type="number" class="form-control" id="expLat">
+                  <small id="expLatHelp" class="form-text text-muted">
+                   minutes
+                  </small>
+                </div>
+              </div>
+              <div class="form-group row" id="expPeriodContainer">
+                <label for="expPeriod" class="col-sm-5 col-form-label">Expected Period</label>
+                <div class="col-sm-7">
+                  <input type="number" class="form-control" id="expPeriod">
+                  <small id="expPeriodHelp" class="form-text text-muted">
+                   minutes
+                  </small>
+                </div>
+              </div>
+
+              <!-- publisher -->
+              <div class="form-group row" id="sendPeriodContainer">
+                <label for="sendPeriod" class="col-sm-5 col-form-label">Sending Period</label>
+                <div class="col-sm-7">
+                  <input type="number" class="form-control" id="sendPeriod">
+                  <small id="sendPeriodHelp" class="form-text text-muted">
+                   minutes
+                  </small>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="addNode()">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="bundle.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+      let nodes = []
+      window.logs = []
+
+      const brokerURL = "https://tests-252502.appspot.com"
+
+      window.addLog = function (t, m) {
+        window.logs.push({time: t, description: m})
+        updateLogView()
+      }
+
+      updateNodesView()
+
+      $('#expLatContainer').hide()
+      $('#expPeriodContainer').hide()
+      $('#sendPeriodContainer').hide()
+
+      function typeChanged() {
+        $('#expLatContainer').hide()
+        $('#expPeriodContainer').hide()
+        $('#sendPeriodContainer').hide()
+
+        let nodeType = $('#nodeType').val()
+
+        if (nodeType == "pub") {
+          $('#sendPeriodContainer').show()
+        } else if (nodeType == "sub") {
+          $('#expLatContainer').show()
+          $('#expPeriodContainer').show()
+        }
+      }
+
+      function addNode() {
+        let node = {
+          id: $('#nodeID').val(),
+          type: $('#nodeType').val(),
+          topic: $('#topic').val(),
+          //simNetLat: $('#simNetLat').val(),
+          expLat: $('#expLat').val(),
+          expPeriod: $('#expPeriod').val(),
+          sendPeriod: $('#sendPeriod').val()
+        }
+
+        if (node.type == 'pub') node.settings = 'Send Period: ' + node.sendPeriod + ' min'
+        else if (node.type == 'sub') node.settings = 'Expected Latency: ' + node.expLat + ' min / Expected Period: ' + node.expPeriod + ' min'
+
+        let r = false
+        if (node.type == 'pub') {
+          r = addPublisher(node)
+        } else if (node.type == 'sub') {
+          r = addSubscriber(node)
+        }
+
+        console.log(r)
+
+        if (r) {
+          nodes.push(node)
+          updateNodesView()
+          $('#exampleModal').modal('hide')
+          $('#nodeID').val('')
+          $('#nodeType').val('')
+          $('#topic').val('')
+          //$('#simNetLat').val('')
+          $('#expLat').val('')
+          $('#expPeriod').val('')
+          $('#sendPeriod').val('')
+        }
+      }
+
+      function removeNode(id) {
+
+        let i = nodes.findIndex((n) => { return n.id == id })
+
+        if (i > -1)
+          nodes.splice(i, 1)
+
+        updateNodesView()
+
+      }
+
+      function updateNodesView() {
+
+        $('#nodeList').html('')
+
+        for (var i=0; i < nodes.length; i++) {
+          $('#nodeList').append('<tr><th scope="row">' + nodes[i].id + '</th><td>' + nodes[i].type + '</td><td>' + nodes[i].topic + '</td><td>' + nodes[i].settings + '</td><td><a href="#" class="btn btn-danger btn-sm" onclick="removeNode(\'' + nodes[i].id + '\')">Delete</a></td></tr>')
+        }
+
+      }
+
+      function updateLogView() {
+
+        $('#logList').html('')
+
+        for (var i=logs.length-1; i >= 0; i--) {
+          $('#logList').append('<tr><td>' + logs[i].time + '</td><td>' + logs[i].description + '</td></tr>')
+        }
+
+      }
+
+      function storeFunction() {}
+
+    </script>
+
+</body>
+</html>
+
