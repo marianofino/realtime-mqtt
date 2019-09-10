@@ -85,12 +85,12 @@
               </table>
             </div>
             <div class="tab-pane fade" id="broker">
-              <form>
+              <form action="/lambda" method="post" id="myForm">
               <div class="form-group">
                 <label for="irtaFunction">IRTA Function</label>
                 <textarea class="form-control" id="irtaFunction" rows="20"></textarea>
               </div>
-              <button type="button" class="btn btn-primary" onclick="storeFunction()">Save</button>
+              <button type="submit" class="btn btn-primary">Save</button>
               </form>
             </div>
             <div class="tab-pane fade" id="log">
@@ -197,7 +197,7 @@
       </div>
     </div>
 
-    <script src="js/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="bundle.js" crossorigin="anonymous"></script>
 
@@ -205,7 +205,7 @@
       let nodes = []
       window.logs = []
 
-      const brokerURL = "https://tests-252502.appspot.com"
+      const brokerURL = window.location.hostname + ":4100"
 
       window.addLog = function (t, m) {
         window.logs.push({time: t, description: m})
@@ -249,9 +249,9 @@
 
         let r = false
         if (node.type == 'pub') {
-          r = addPublisher(node)
+          r = addPublisher(brokerURL, node)
         } else if (node.type == 'sub') {
-          r = addSubscriber(node)
+          r = addSubscriber(brokerURL, node)
         }
 
         console.log(r)
@@ -301,7 +301,35 @@
 
       }
 
-      function storeFunction() {}
+      fetch('/lambda')
+      .then(function(response) {
+        return response.text();
+      })
+      .then(function(txt) {
+        $('#irtaFunction').val(txt);
+      })
+
+      $('#myForm').on('submit', function(e) {
+        // Stop the browser from doing anything else
+        e.preventDefault();
+        // Do an AJAX post
+        $.ajax({
+          type: "POST",
+          url: "/lambda",
+          contentType: "application/json",
+          data: JSON.stringify({
+            fn: $('#irtaFunction').val()
+          }),
+          success: function(data) {
+            // POST was successful - do something with the response
+            alert('Function updated');
+          },
+          error: function(data) {
+            // Server error, e.g. 404, 500, error
+            alert(data.responseText);
+          }
+        });
+      });
 
     </script>
 

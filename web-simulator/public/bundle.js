@@ -13997,7 +13997,7 @@ const Publisher = require('../../publisher.class')
 const MAX_N = 999999
 const MIN_N = 1
 
-window.addSubscriber = function (node) {
+window.addSubscriber = function (brokerURL, node) {
 
   if (!node.id) { alert('You must provide an id.'); return false }
   if (!node.topic) { alert('You must provide a topic.'); return false }
@@ -14005,7 +14005,7 @@ window.addSubscriber = function (node) {
   if (!node.expLat) { alert('You must provide an expected latency.'); return false }
   //if (!node.simNetLat) { alert('You must provide a simulated network latency.'); return false }
 
-  let sub = new Subscriber({ broker: 'wxs://127.0.0.1:3000', id: 'subscriber-' + node.id, topic: node.topic, period: node.expPeriod, latency: node.expLat }, true)
+  let sub = new Subscriber({ broker: 'wxs://' + brokerURL, id: 'subscriber-' + node.id, topic: node.topic, period: node.expPeriod, latency: node.expLat }, true)
 
   sub.on('message', function (topic, message) {
     // do something with message
@@ -14016,14 +14016,14 @@ window.addSubscriber = function (node) {
 
 }
 
-window.addPublisher = function (node) {
+window.addPublisher = function (brokerURL, node) {
 
   if (!node.id) { alert('You must provide an id.'); return false }
   if (!node.topic) { alert('You must provide a topic.'); return false }
   if (!node.sendPeriod) { alert('You must provide a sending period.'); return false }
   //if (!node.simNetLat) { alert('You must provide a simulated network latency.'); return false }
 
-  let pub = new Publisher({ broker: 'wxs://127.0.0.1:3000', id: 'publisher-' + node.id, topic: node.topic, period: node.sendPeriod }, true)
+  let pub = new Publisher({ broker: 'wxs://' + brokerURL, id: 'publisher-' + node.id, topic: node.topic, period: node.sendPeriod }, true)
 
   pub.getPayload = function () {
     let m = getRandomNumber()
