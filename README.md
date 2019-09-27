@@ -22,6 +22,10 @@ In this example there is a publisher sending a message with a simlated latency o
 
 Go to **examples/test3-discard-out-of-latency**
 
+### Web simulator
+
+If you would like to try IRTA without installing anything, please check out our [online demo](http://192.241.222.173:4101/demo/).
+
 ## Requirements
 
 * Node.js (tested with v10.14.1): https://nodejs.org/es/download/
