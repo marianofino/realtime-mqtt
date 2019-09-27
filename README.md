@@ -1,6 +1,6 @@
 # What is IRTA
 
-For details about IRTA and modifications done on MQTT, please refer to the PDF found in this repository.
+For details about IRTA and modifications done on MQTT, please refer to the PDF found in this repository. There is an [online demo](http://192.241.222.173:4101/demo/) available too.
 
 ## Examples
 
@@ -36,6 +36,22 @@ $ npm rebuild
 ```
 
 Once rebuilt, you are able to create a broker using Mosca and IRTA, and subscribers and publishers. Please, refer to the examples section to see how this is done.
+
+## Editing IRTA function
+
+```
+function lambda (irta, packet) {
+  // do something
+  return true
+}
+```
+
+The function receives 2 arguments:
+* The first one is the irta object
+* The second one is the packet to be analyzed and processed
+
+The payload can be found at `packet.payload` and is in `Buffer` type. In case we want to process and replace the payload of the current message, we need to overwrite it. If we want to prevent that message from being sent, we return `false`, otherwise we return `true`.
+
 
 # Troubleshooting
 
