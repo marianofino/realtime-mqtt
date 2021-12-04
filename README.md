@@ -62,3 +62,7 @@ The payload can be found at `packet.payload` and is in `Buffer` type. In case we
 ## Error: listen EADDRINUSE :::1883
 
 This means that the port 1883 is being used by other process. Probably you have another MQTT broker running (Mosquitto?). Make sure to either stop that process or change the broker port (found on `settings` in the broker file).
+
+## License
+
+[GNU General Public License, version 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
